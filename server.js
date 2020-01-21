@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+//const logger = require("./middleware/logger");
+const morgan = require("morgan");
 
 // route files
 
@@ -10,6 +12,12 @@ const bootcamps = require("./routes/bootcamps");
 dotenv.config({ path: "./config/config.env" });
 
 let app = express();
+
+// tell the server to use the logger middleware
+//app.use(logger);
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // tell the server to look at /api/v1/bootcamps if a request for that route comes in
 app.use("/api/v1/bootcamps", bootcamps);
