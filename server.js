@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 const colors = require("colors");
+const errorHandler = require("./middleware/error");
 
 //Load env vars
 
@@ -30,6 +31,9 @@ if (process.env.NODE_ENV === "development") {
 
 // tell the server to look at /api/v1/bootcamps if a request for that route comes in
 app.use("/api/v1/bootcamps", bootcamps);
+
+// middleware executed linarly, so need to tell the server to use error middleware below the roots
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
